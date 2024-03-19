@@ -1,0 +1,16 @@
+.container {
+    width: 20%;
+    display: grid;
+    grid-template-columns: 1fr 2fr ;
+    align-items: center;
+
+}
+img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    border: 2px solid white;
+}
+h1 {
+    margin: 5px 0px 10px 0px;
+}
