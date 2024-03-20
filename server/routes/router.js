@@ -33,12 +33,12 @@ router.post('/signup',async (req,res)=>{
     } 
 });
 
-router.post('/login' ,async (req,res)=>{
+router.post('/signin' ,async (req,res)=>{
     try {
         const {email,password} = req.body;
         const result = await loginQuery(email,password);
         if(result.auth) {
-            res.redirect('/dashboard');
+            res.status(200).json({res:true,auth:true})
         } else {
             res.status(401).json({res:true,auth:false});
         }

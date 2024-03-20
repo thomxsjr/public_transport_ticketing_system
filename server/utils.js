@@ -10,7 +10,7 @@ exports.loginQuery = async (email, password) => {
         console.log(result);
         if(result) {
             const dbRef = ref(db);
-            const snapshot = await get(child(dbRef,`teachers/${result.user.uid}`));
+            const snapshot = await get(child(dbRef,`${result.user.uid}`));
             if(snapshot.exists()) {
                 return {auth : true, response : snapshot.val()}
             } else {
