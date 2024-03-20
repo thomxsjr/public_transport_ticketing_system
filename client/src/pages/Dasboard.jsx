@@ -9,6 +9,7 @@ export default function Dashboard() {
         <>
             <Header />
             <p>hi</p>
+            
         </>
         
     )
