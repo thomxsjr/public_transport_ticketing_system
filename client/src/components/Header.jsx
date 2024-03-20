@@ -12,6 +12,9 @@ export default function Header(){
             <div className='name'>
                 <h1>Nirmal</h1>
             </div>
+            <div className='menu'>
+                <img src="src/assets/images/bars-solid.svg" />
+            </div>
         </div>
         
         </>

@@ -2,17 +2,11 @@ import './App.css'
 import Header from './components/Header';
 
 function App() {
-  const userInfo = {
-    name: "Johnny",
-    email: "codrkai@gamil.com",
-    loggedIn: true,
-    cartItems: 4
-  }
+  
 
   return (
     <>
-    <Header />
-    
+    <h1>Digital Ticketing System For Public Transport</h1>
     </>
   );
 }
