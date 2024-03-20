@@ -27,14 +27,16 @@ exports.loginQuery = async (email, password) => {
     }
 }
 
-exports.signUpQuery = async (email,password) => {
+exports.signUpQuery = async (email,password, userData) => {
     try {
-        const result = await createUserWithEmailAndPassword(auth,email, password);
+        const result = await createUserWithEmailAndPassword(auth, email, password);
         console.log(result);
         if(result) {
             console.log(result);
+
+            
             const dbRef = ref(db);
-            await set(child(dbRef,`teachers/${result.user.uid}`),{...email});
+            await set(child(dbRef,`${result.user.uid}`),{...userData, email});
 
             return {auth : true, response : result}
         } else {
@@ -46,3 +48,11 @@ exports.signUpQuery = async (email,password) => {
         return {auth : false}
     }
 }
+
+// function writeUserData(userId, name, email, imageUrl) {
+//     firebase.database().ref('users/' + userId).set({
+//       username: name,
+//       email: email,
+//       profile_picture : imageUrl
+//     });
+//   }

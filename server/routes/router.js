@@ -10,25 +10,30 @@ router.get('/users', (req, res) => {
     res.json(userData);
 })
 
-app.post('/signup',async (req,res)=>{
+router.post('/signup',async (req,res)=>{
     try {
-        const {username, email, password} = req.body;
-        
-        const result = await signUpQuery(email,password);
-        if(result.auth) {
-            console.log("True")
-            res.redirect('/dashboard');
-        } else {
-            console.log("False")
+        const email = req.body.email
+        const password = req.body.password
+        const userData = {
+            username: req.body.username
+        }
 
-            res.status(401).json({res:true,auth : false, msg:result.msg});
+        
+        const result = await signUpQuery(email,password, userData);
+        if(result.auth) {
+            res.status(200).json({res:true, auth : true});
+        } else {
+            console.log("False");
+
+            res.status(401).json({res:true,auth : false, msg:result.msg, email: email});
         }
     } catch(err) {
-        return res.status(501).json({res:false,msg:"Something went wrong!"});
+        console.error("Error in SignUp : ", err);
+        return res.status(501).json({res:false,msg:"Internal Server Error!", error: err});
     } 
 });
 
-app.post('/login' ,async (req,res)=>{
+router.post('/login' ,async (req,res)=>{
     try {
         const {email,password} = req.body;
         const result = await loginQuery(email,password);
@@ -44,7 +49,7 @@ app.post('/login' ,async (req,res)=>{
 });
 
 
-
+router.get('/dashboard', (req, res)=>res.send('Hey'))
 
 
 module.exports = router

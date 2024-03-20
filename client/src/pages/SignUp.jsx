@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from 'axios'
+import { Navigate, redirect } from 'react-router-dom'
 
 
 export default function SignUp(){
@@ -8,20 +9,30 @@ export default function SignUp(){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
-
-    const axiosPostData = async(processing) => {
+    const [redirect, setRedirect] = useState(false);
+    const axiosPostData = async() => {
         const postData = {
             username: username,
             email: email,
             password: password
         }
 
-        await axios.post('http://localhost:4000/signup, postData')
-        .then(res => setError(<p>{res.data}</p>))
+        axios.post('http://localhost:4000/signup', postData)
+        .then((res) => {
+            if(res.status == 200 && res.data?.res) {
+                if(res.data.auth) 
+                    setRedirect(true);
+                else
+                setError('Signup Failed');
+            }
+    
+        })
+
+        
     }
 
-    function handleSubmit(){
-        e.preventDefault()
+    function handleSubmit(e){
+        e.preventDefault();
 
         setError('')
         axiosPostData()
@@ -29,8 +40,9 @@ export default function SignUp(){
 
     return(
         <>
-            <form>
-                <h1>Sign Up</h1>
+            <h1>Sign Up</h1>
+            { redirect && <Navigate to='/dashboard'/>}
+            <form onSubmit={handleSubmit}>
                 <label>Username</label>
                 <input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />
                 <br />
@@ -41,7 +53,7 @@ export default function SignUp(){
                 <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 <br />
                 {error}
-                <button type="submit" onClick={handleSubmit}>Submit</button>
+                <button type="submit">Submit</button>
             </form>
         </>
     )
