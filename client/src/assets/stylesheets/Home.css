@@ -13,14 +13,13 @@
 }
 
 .title{
-    text-align: left;
     margin: auto;
     width: 100%;
     align-items: center;
     font-size: 20px;
     
 }
-.button > button {
+.button > a > button {
     font-size: 28px;
     margin: 5px;
     background-color: #364DF9;
