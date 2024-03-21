@@ -5,6 +5,8 @@ import { Navigate, redirect } from 'react-router-dom'
 
 export default function SignUp(){
 
+    
+
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')

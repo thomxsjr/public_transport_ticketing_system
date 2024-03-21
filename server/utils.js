@@ -1,7 +1,9 @@
-const {app,auth, db} = require('./connections/firebase');
+const { auth, db} = require('./connections/firebase');
 const {signInWithEmailAndPassword, createUserWithEmailAndPassword} = require('firebase/auth');
 const {ref,get,set, child} = require('firebase/database');
-const { v4: uuidv4 } = require('uuid');
+// const { v4: uuidv4 } = require('uuid');
+const { getStorage, ref : storageRef } = require("firebase/storage");
+
 
 
 exports.loginQuery = async (email, password) => {
@@ -49,10 +51,23 @@ exports.signUpQuery = async (email,password, userData) => {
     }
 }
 
-// function writeUserData(userId, name, email, imageUrl) {
-//     firebase.database().ref('users/' + userId).set({
-//       username: name,
-//       email: email,
-//       profile_picture : imageUrl
-//     });
-//   }
+exports.uploadPfp = async(userID, fileItem) => {
+
+    try {
+        const storage = getStorage();
+        const pfpRef = storageRef(storage, `images/${userID}/`+fileItem.name);
+        const pfpUpload = pfpRef.put(fileItem)
+
+        pfpUpload.on("state_changed", (error)=>{
+            console.log("Error in upload", error);
+            return false;
+        })
+        return true
+
+    } catch(error){
+        console.log(error)
+    }
+    
+
+
+}

@@ -9,6 +9,7 @@ import SignUp from "../pages/SignUp";
 import SignIn from "../pages/SignIn";
 import Home from "../pages/Home";
 import Dashboard from "../pages/Dasboard";
+import Profile from "../pages/Profile"
 
 
 export default function RouterRoutes() {
@@ -34,6 +35,11 @@ export default function RouterRoutes() {
 					<Route
 						path="/dashboard"
 						element={<Dashboard />}
+					/>
+
+					<Route
+						path="/profile"
+						element={<Profile />}
 					/>
 
 					<Route

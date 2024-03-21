@@ -3,6 +3,7 @@ const { auth, db } = require('../connections/firebase');
 const { ref, get } = require('firebase/database');
 
 
+
 const express = require('express')
 const router = express.Router()
 
@@ -10,12 +11,11 @@ router.get('/getUser', async (req, res) => {
 
 
     try {
-        
         const userID = auth.currentUser.uid;
-        const  dbRef = ref(db, `${userID}/username`);
-        const getUsername = await get(dbRef);
-        const username = getUsername.val();    
-        res.json(username);
+        const  dbRef = ref(db, `${userID}`);
+        const getUserDetails = await get(dbRef);
+        const userDetails = getUserDetails.val();    
+        res.json(userDetails);
         } catch (e) {
             console.log("Error : ", e);
             return null
@@ -35,6 +35,13 @@ router.post('/signup',async (req,res)=>{
         
         const result = await signUpQuery(email,password, userData);
         if(result.auth) {
+
+            const userID = auth.currentUser.uid;
+            do {
+                const defaultImageUpload = uploadPfp(userID)
+            }while(!defaultImageUpload)
+            
+
             res.status(200).json({res:true, auth : true});
         } else {
             console.log("False");

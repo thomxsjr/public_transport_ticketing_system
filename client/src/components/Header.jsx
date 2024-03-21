@@ -19,7 +19,7 @@ export default function Header(){
         await axios.get('http://localhost:4000/getUser')
         .then(res => {
             if (processing) {
-                setUsername(res.data)
+                setUsername(res.data.username)
             }
         })
         .catch(err => console.log(err))
@@ -28,9 +28,9 @@ export default function Header(){
     return(
         <>
             <div className='maincontainer'>
-                <div className="pfp">
+            <a href="/profile"><div className="pfp">
                     <img src="src/assets/images/itachi_pfp.jpeg" />
-                </div>
+                </div></a>
                 <div className='name'>
                     <h1>{ username }</h1>
                 </div>
