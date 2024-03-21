@@ -1,14 +1,28 @@
 const { loginQuery, signUpQuery } = require("../utils");
-const {auth} = require('../connections/firebase');
+const { auth, db } = require('../connections/firebase');
+const { ref, get } = require('firebase/database');
+
 
 const express = require('express')
 const router = express.Router()
 
-router.get('/users', (req, res) => {
-    const userData = "Nirmal"
+router.get('/getUser', async (req, res) => {
 
-    res.json(userData);
-})
+
+    try {
+        
+        const userID = auth.currentUser.uid;
+        const  dbRef = ref(db, `${userID}/username`);
+        const getUsername = await get(dbRef);
+        const username = getUsername.val();    
+        res.json(username);
+        } catch (e) {
+            console.log("Error : ", e);
+            return null
+       }
+    }
+    
+)
 
 router.post('/signup',async (req,res)=>{
     try {
