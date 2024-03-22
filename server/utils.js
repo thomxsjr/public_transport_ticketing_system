@@ -5,14 +5,13 @@ const {ref,get,set, child} = require('firebase/database');
 const { getStorage, ref : storageRef } = require("firebase/storage");
 
 
-
 exports.loginQuery = async (email, password) => {
     try {
         const result = await signInWithEmailAndPassword(auth,email, password);
         console.log(result);
         if(result) {
             const dbRef = ref(db);
-            const snapshot = await get(child(dbRef,`${result.user.uid}`));
+            const snapshot = await get(child(dbRef,`users/${result.user.uid}`));
             if(snapshot.exists()) {
                 return {auth : true, response : snapshot.val()}
             } else {
@@ -38,7 +37,7 @@ exports.signUpQuery = async (email,password, userData) => {
 
             
             const dbRef = ref(db);
-            await set(child(dbRef,`${result.user.uid}`),{...userData, email});
+            await set(child(dbRef,`users/${result.user.uid}`),{...userData, email});
 
             return {auth : true, response : result}
         } else {
@@ -55,7 +54,7 @@ exports.uploadPfp = async(userID, fileItem) => {
 
     try {
         const storage = getStorage();
-        const pfpRef = storageRef(storage, `images/${userID}/`+fileItem.name);
+        const pfpRef = storageRef(storage, `images/pfp/${userID}/`+fileItem.name);
         const pfpUpload = pfpRef.put(fileItem)
 
         pfpUpload.on("state_changed", (error)=>{

@@ -12,7 +12,7 @@ const firebaseConfig = {
   storageBucket: "public-transport-ticketing-sys.appspot.com",
   messagingSenderId: "617479715053",
   appId: "1:617479715053:web:40f2d2a1c14afafabd74e4",
-  storageBucket: "gs://medicine-box-project.appspot.com"
+  storageBucket: "gs://public-transport-ticketing-sys.appspot.com"
   };
 
 const app = initializeApp(firebaseConfig);

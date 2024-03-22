@@ -12,7 +12,7 @@ router.get('/getUser', async (req, res) => {
 
     try {
         const userID = auth.currentUser.uid;
-        const  dbRef = ref(db, `${userID}`);
+        const  dbRef = ref(db, `users/${userID}`);
         const getUserDetails = await get(dbRef);
         const userDetails = getUserDetails.val();    
         res.json(userDetails);
@@ -29,18 +29,13 @@ router.post('/signup',async (req,res)=>{
         const email = req.body.email
         const password = req.body.password
         const userData = {
-            username: req.body.username
+            username: req.body.username,
+            pfp: 'https://firebasestorage.googleapis.com/v0/b/public-transport-ticketing-sys.appspot.com/o/images%2Fpfp%2Fdefault%2Fdefault_pfp.png?alt=media&token=1446ebd2-b1c4-4001-be71-e3eee9790ab3'
         }
 
         
         const result = await signUpQuery(email,password, userData);
         if(result.auth) {
-
-            const userID = auth.currentUser.uid;
-            do {
-                const defaultImageUpload = uploadPfp(userID)
-            }while(!defaultImageUpload)
-            
 
             res.status(200).json({res:true, auth : true});
         } else {
@@ -70,7 +65,6 @@ router.post('/signin' ,async (req,res)=>{
 });
 
 
-router.get('/dashboard', (req, res)=>res.send('Hey'))
 
 
 module.exports = router

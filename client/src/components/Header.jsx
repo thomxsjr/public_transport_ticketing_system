@@ -5,7 +5,8 @@ import axios from 'axios'
 
 export default function Header(){
 
-    const [username, setUsername] = useState([])
+    const [username, setUsername] = useState("")
+    const [pfp, setPfp] = useState("")
 
     useEffect( () => {
         let processing = true
@@ -20,6 +21,7 @@ export default function Header(){
         .then(res => {
             if (processing) {
                 setUsername(res.data.username)
+                setPfp(res.data.pfp)
             }
         })
         .catch(err => console.log(err))
@@ -28,9 +30,7 @@ export default function Header(){
     return(
         <>
             <div className='maincontainer'>
-            <a href="/profile"><div className="pfp">
-                    <img src="src/assets/images/itachi_pfp.jpeg" />
-                </div></a>
+                <a href="/profile"><img className="pfp" src={pfp} /></a>
                 <div className='name'>
                     <h1>{ username }</h1>
                 </div>
