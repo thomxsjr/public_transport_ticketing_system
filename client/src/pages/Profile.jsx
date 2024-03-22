@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "../assets/stylesheets/Profile.css"
 import axios from "axios";
 import UploadPfpBox from "../components/UploadPfpBox";
-import { usePfpBox } from "../hooks/Hooks"
 
 
 
@@ -12,7 +11,7 @@ export default function Profile() {
     const [email, setEmail] = useState("")
     const [pfp, setPfp] = useState("")
 
-    const [pfpBox, setPfpBox] = usePfpBox(false)
+    const [pfpBox, setPfpBox] = useState(false)
 
     useEffect( () => {
         let processing = true
@@ -37,7 +36,7 @@ export default function Profile() {
 
     return(
         <>
-            { pfpBox ? <UploadPfpBox /> : null}
+            { pfpBox ? <UploadPfpBox setPfpBox={setPfpBox}/> : null}
             <div className="pfpContainer">
                 <img className="pfp-profile" src={pfp} alt="profile-pic" />
                 <div className="overlay" >

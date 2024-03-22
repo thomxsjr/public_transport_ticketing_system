@@ -64,6 +64,25 @@ router.post('/signin' ,async (req,res)=>{
     }   
 });
 
+router.post('/uploadnewpfp', async (req, res) => {
+    try {
+
+        const userID = auth.currentUser.uid;
+        const fileItem = req.body.newPfp
+
+        const result = await uploadPfp(userID, fileItem)
+        if(result) {
+            res.status(200).json({res:true,auth:true})
+
+        } else {
+            res.status(401).json({res:true,auth:false});
+        }
+    } catch(err){
+        console.error(err)
+        return res.status(501).json({msg:"Something went wrong!"});
+    }
+})
+
 
 
 

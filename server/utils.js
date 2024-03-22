@@ -60,8 +60,14 @@ exports.uploadPfp = async(userID, fileItem) => {
         pfpUpload.on("state_changed", (error)=>{
             console.log("Error in upload", error);
             return false;
-        })
-        return true
+        }),() => {
+            pfpUpload.snapshot.getDownloadURL().then(async(url)=>{
+                const dbRef = ref(db, `users/${userID}`);
+                await set(dbRef, url);
+            })
+            return true
+        }
+
 
     } catch(error){
         console.log(error)
