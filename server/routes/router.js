@@ -1,4 +1,4 @@
-const { loginQuery, signUpQuery } = require("../utils");
+const { loginQuery, signUpQuery, uploadPfp } = require("../utils");
 const { auth, db } = require('../connections/firebase');
 const { ref, get } = require('firebase/database');
 
@@ -69,8 +69,9 @@ router.post('/uploadnewpfp', async (req, res) => {
 
         const userID = auth.currentUser.uid;
         const fileItem = req.body.newPfp
+        const fileName = req.body.pfpName
 
-        const result = await uploadPfp(userID, fileItem)
+        const result = await uploadPfp(userID, fileItem, fileName)
         if(result) {
             res.status(200).json({res:true,auth:true})
 

@@ -1,23 +1,19 @@
 
 
 .container {
-    display: grid;
-    grid-template-columns: auto;
-    position: absolute;
+    display: flex;
     padding-left: 30px;
     width: 100%;
     left: 50%;
     top: 50%;
     text-align: center;
-    transform: translate(-50%, -50%);
 }
 
 .title{
     margin: auto;
     width: 100%;
-    align-items: center;
+    /* align-items: center; */
     font-size: 20px;
-    
 }
 .button > a > button {
     font-size: 28px;

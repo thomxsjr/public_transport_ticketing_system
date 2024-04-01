@@ -1,8 +1,8 @@
-const { auth, db} = require('./connections/firebase');
+const { auth, db, storage} = require('./connections/firebase');
 const {signInWithEmailAndPassword, createUserWithEmailAndPassword} = require('firebase/auth');
 const {ref,get,set, child} = require('firebase/database');
 // const { v4: uuidv4 } = require('uuid');
-const { getStorage, ref : storageRef } = require("firebase/storage");
+const { ref : storageRef, uploadBytes, getDownloadURL, listAll, updateMetadata } = require("firebase/storage");
 
 
 exports.loginQuery = async (email, password) => {
@@ -50,29 +50,36 @@ exports.signUpQuery = async (email,password, userData) => {
     }
 }
 
-exports.uploadPfp = async(userID, fileItem) => {
+exports.uploadPfp = async(userID, fileItem, fileName) => {
+    console.log(fileItem)
 
     try {
-        const storage = getStorage();
-        const pfpRef = storageRef(storage, `images/pfp/${userID}/`+fileItem.name);
-        const pfpUpload = pfpRef.put(fileItem)
-
-        pfpUpload.on("state_changed", (error)=>{
+        const pfpRef = storageRef(storage, `images/pfp/${userID}/${fileName}`);
+        const metadata = {
+            contentType: 'image/png'
+          };
+        
+        uploadBytes(pfpRef, fileItem, metadata).then(() => {
+            const pfpFileRef = storageRef(storage, `images/pfp/${userID}/`)
+            listAll(pfpFileRef).then((res) =>{
+                res.items.forEach((item)=>{
+                    getDownloadURL(item).then(async(url) => {
+                        const dbRef = ref(db, `users/${userID}/pfp`);
+                        await set(dbRef, url);
+                    })
+                })
+            })
+            
+            return true
+        }, (error)=>{
             console.log("Error in upload", error);
             return false;
-        }),() => {
-            pfpUpload.snapshot.getDownloadURL().then(async(url)=>{
-                const dbRef = ref(db, `users/${userID}`);
-                await set(dbRef, url);
-            })
-            return true
         }
-
+        )
+        
 
     } catch(error){
         console.log(error)
     }
-    
-
 
 }
