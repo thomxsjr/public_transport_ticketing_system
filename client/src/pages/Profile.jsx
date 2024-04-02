@@ -40,12 +40,12 @@ export default function Profile() {
             <div className="pfpContainer">
                 <img className="pfp-profile" src={pfp} alt="profile-pic" />
                 <div className="overlay" >
-                    <button className="button" onClick={()=>{setPfpBox(!pfpBox); console.log(pfpBox)}}>Edit</button>
+                    <button className="button" onClick={()=>{setPfpBox(!pfpBox)}}>Edit</button>
                 </div>
             </div>
             <h1>{username}</h1>
             <p>{email}</p>
-            
+
         </>
         
     )

@@ -12,13 +12,17 @@
     object-fit: cover;
 }
 
-.menu{
+.balance{
     width: 100%;
 }
-.menu img {
-    width: 30px;
-    height: 30px;
+.balance p {
+    cursor: pointer;
+    padding: 2px 10px;
+    font-size: 20px;
+    font-weight: bold;
     float: right;
+    background-color: #364DF9;
+    border-radius: 10px;
 }
 
 h1 {
