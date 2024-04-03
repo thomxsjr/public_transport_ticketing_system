@@ -1,6 +1,7 @@
 const { loginQuery, signUpQuery, uploadPfp } = require("../utils");
 const { auth, db } = require('../connections/firebase');
 const { ref, get, set } = require('firebase/database');
+const { signOut } =require('firebase/auth')
 
 
 
@@ -35,6 +36,24 @@ router.post('/updateBalance', async(req, res)=>{
         return res.status(501).json({msg:"Something went wrong!"});
     }
 
+})
+router.post('/updatebuspass', async (req, res) => {
+    const userID = auth.currentUser.uid;
+    const passID = req.body.passID
+    const passtype = req.body.passtype
+    const validity = req.body.validity
+
+    try {
+        set(ref(db, 'users/'+userID+'/buspass/exist'), true)
+        set(ref(db, 'users/' + userID + '/buspass/details'), 
+        {'passID': passID, 'passtype': passtype, 'validity': validity});
+
+        res.status(200).json({result:true})
+        
+    } catch(err){
+        console.error(err)
+        return res.status(501).json({result:false, msg:"Something went wrong!"});
+    }
 })
 
 router.post('/signup',async (req,res)=>{
@@ -76,6 +95,17 @@ router.post('/signin' ,async (req,res)=>{
         return res.status(501).json({msg:"Something went wrong!"});
     }   
 });
+
+router.post('/logout', async(req, res) => {
+
+
+    signOut(auth).then(() => {
+        res.status(200).json({result:true})
+    }).catch((error) => {
+        console.error(error)
+        res.status(501).json({result:false, msg: 'Something went wrong. Try again!'})
+    });
+})
 
 router.post('/uploadnewpfp', async (req, res) => {
     try {

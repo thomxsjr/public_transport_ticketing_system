@@ -5,9 +5,10 @@ import '../assets/stylesheets/BusPassBox.css'
 export default function BusPass({setBusPassBox}) {
 
     const [busPassExist, setBusPassExist] = useState()
-    const [passID, setpassID] = useState()
+    const [passID, setPassID] = useState()
     const [passType, setPassType] = useState()
     const [validity, setValidity] = useState()
+    const [error, setError] = useState('')
 
 
     useEffect( () => {
@@ -23,7 +24,7 @@ export default function BusPass({setBusPassBox}) {
         .then(res => {
             if (processing) {
                 setBusPassExist(res.data.buspass.exist)
-                setpassID(res.data.buspass.details.passID)
+                setPassID(res.data.buspass.details.passID)
                 setPassType(res.data.buspass.details.passtype)
                 setValidity(res.data.buspass.details.validity)
             }
@@ -34,18 +35,26 @@ export default function BusPass({setBusPassBox}) {
     const axiosPostData = async() => {
 
         const postData = {
-            'balance': Number(balance)+Number(newBalance)
+            'passID': passID,
+            'passtype': passType,
+            'validity': validity
         }
         console.log(postData)
 
-        axios.post('http://localhost:4000/updateBalance', postData)
-        .then(location.reload())
+        axios.post('http://localhost:4000/updatebusPass', postData)
+        .then((res)=>{
+            if(res.data.result){
+                // location.reload()
+                setError('success')
+            } else {
+                setError(res.data.msg)
+            }
+        })
 
     }
 
     function handleSubmit(e){
         e.preventDefault();
-        if(newBalance == null) return;
 
         setError('')
         axiosPostData()
@@ -58,24 +67,28 @@ export default function BusPass({setBusPassBox}) {
                 <h1>Bus Pass</h1>
                 {busPassExist? 
                 <div>
-                    y
+                    <h3>Details:</h3>
+                    <p>Pass ID: {passID}</p>
+                    <p>Pass Type: {passType}</p>
+                    <p>Validity: {validity}</p>
                 </div> : 
                 <div>
                     <h2>Add Bus Pass:</h2>
                     <form onSubmit={handleSubmit}>
                         <label>Pass ID:</label> <br />
-                        <input type="text" name="passID" /> <br />
+                        <input type="text" name="passID"required maxLength={12} value={passID} onChange={(e) => setPassID(e.target.value)} /> <br />
                         <label>Pass Type:</label> <br />
-                        <select name="passtype">
+                        <select name="passtype" required value={passType} onChange={(e) => {setPassType(e.options[e.selectedIndex].value)}}>
                             <option value="Basic">Basic</option>
                             <option value="Standard">Standard</option>
                             <option value="Premium">Premium</option>
                         </select> <br /> 
                         <label>Validity Till:</label> <br />
-                        <input type="date" /> <br />
+                        <input type="date" required value={validity} onChange={(e) => setValidity(e.target.value)} /> <br />
                         <button type="submit">Submit</button>
                     </form>
                 </div>} <br />
+                {error}
                 <button onClick={()=>{setBusPassBox(false)}}>Close</button>
             </div>
         </div>
