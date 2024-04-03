@@ -2,6 +2,7 @@ import '../assets/stylesheets/Header.css'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import AddBalance from './AddBalance'
+import Dashboard from '../pages/Dasboard'
 
 
 export default function Header(){

@@ -29,12 +29,7 @@ router.post('/updateBalance', async(req, res)=>{
     const userID = auth.currentUser.uid;
     try {
         set(ref(db, 'users/' + userID + '/balance'), balance);
-        if(result) {
-            res.status(200).json({res:true,auth:true})
-
-        } else {
-            res.status(401).json({res:true,auth:false});
-        }
+        
     } catch(err){
         console.error(err)
         return res.status(501).json({msg:"Something went wrong!"});
@@ -90,12 +85,7 @@ router.post('/uploadnewpfp', async (req, res) => {
         const fileName = req.body.pfpName
 
         const result = await uploadPfp(userID, fileItem, fileName)
-        if(result) {
-            res.status(200).json({res:true,auth:true})
-
-        } else {
-            res.status(401).json({res:true,auth:false});
-        }
+        
     } catch(err){
         console.error(err)
         return res.status(501).json({msg:"Something went wrong!"});

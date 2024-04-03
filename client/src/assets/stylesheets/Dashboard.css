@@ -1,0 +1,23 @@
+.BusPassBox{
+    background-color: white;
+    color: black;
+    margin-top: 20px;
+    border-radius: 20px;
+    padding: 10px;
+    display:flex;
+    flex-direction: column;
+}
+.BusPassText{
+    margin: 0px;
+}
+.BusPassButton{
+
+    margin-top: 20px;
+    border: none;
+    color: white;
+    background-color: #364DF9;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
