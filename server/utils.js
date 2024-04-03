@@ -37,7 +37,7 @@ exports.signUpQuery = async (email,password, userData) => {
 
             
             const dbRef = ref(db);
-            await set(child(dbRef,`users/${result.user.uid}`),{...userData, email, 'balance': 0});
+            await set(child(dbRef,`users/${result.user.uid}`),{...userData, email, 'balance': 0, 'buspass': {'exist': false, 'details': {'passID': "", 'passtype': "", 'validity': ""}}});
 
             return {auth : true, response : result}
         } else {
