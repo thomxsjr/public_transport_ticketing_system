@@ -31,6 +31,25 @@ export default function BusPass({setBusPassBox}) {
         .catch(err => console.log(err))
     }
     
+    const axiosPostData = async() => {
+
+        const postData = {
+            'balance': Number(balance)+Number(newBalance)
+        }
+        console.log(postData)
+
+        axios.post('http://localhost:4000/updateBalance', postData)
+        .then(location.reload())
+
+    }
+
+    function handleSubmit(e){
+        e.preventDefault();
+        if(newBalance == null) return;
+
+        setError('')
+        axiosPostData()
+    }
 
     return(
         <>
@@ -42,8 +61,21 @@ export default function BusPass({setBusPassBox}) {
                     y
                 </div> : 
                 <div>
-                    n
-                </div>}
+                    <h2>Add Bus Pass:</h2>
+                    <form onSubmit={handleSubmit}>
+                        <label>Pass ID:</label> <br />
+                        <input type="text" name="passID" /> <br />
+                        <label>Pass Type:</label> <br />
+                        <select name="passtype">
+                            <option value="Basic">Basic</option>
+                            <option value="Standard">Standard</option>
+                            <option value="Premium">Premium</option>
+                        </select> <br /> 
+                        <label>Validity Till:</label> <br />
+                        <input type="date" /> <br />
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>} <br />
                 <button onClick={()=>{setBusPassBox(false)}}>Close</button>
             </div>
         </div>
