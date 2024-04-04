@@ -56,6 +56,28 @@ router.post('/updatebuspass', async (req, res) => {
     }
 })
 
+router.post('/driveronboard', async (req, res) => {
+    const userID = auth.currentUser.uid;
+    const name = req.body.name
+    const licensenumber = req.body.licensenumber
+    const vehiclemodel = req.body.vehiclemodel
+    const vehicletype = req.body.vehicletype
+    const numberplate = req.body.numberplate
+    const rate = req.body.rate
+
+
+    try {
+        set(ref(db, 'users/'+userID+'/driverdetails'), 
+        {'licensenumber': licensenumber, 'name': name, 'rate': rate, 'vehicledetails':{'numberplate': numberplate, 'vehiclemodel': vehiclemodel, 'vehicletype': vehicletype}})
+
+        res.status(200).json({result:true, msg: 'Success'})
+        
+    } catch(err){
+        console.error(err)
+        return res.status(501).json({result:false, msg:"Something went wrong!"});
+    }
+})
+
 router.post('/signup',async (req,res)=>{
     try {
         const email = req.body.email
