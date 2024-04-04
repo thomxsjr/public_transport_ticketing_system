@@ -33,8 +33,7 @@
     "eslint-plugin-react-refresh": "^0.4.5",
     "vite": "^5.1.6"
   },
-
-  "resolutions": {
-    "rollup": "npm:@rollup/wasm-node"
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.9.5"
   }
 }
