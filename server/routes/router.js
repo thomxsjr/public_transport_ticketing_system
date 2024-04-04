@@ -42,9 +42,10 @@ router.post('/updatebuspass', async (req, res) => {
     const passID = req.body.passID
     const passtype = req.body.passtype
     const validity = req.body.validity
+    const exist = req.body.exist
 
     try {
-        set(ref(db, 'users/'+userID+'/buspass/exist'), true)
+        set(ref(db, 'users/'+userID+'/buspass/exist'), !exist)
         set(ref(db, 'users/' + userID + '/buspass/details'), 
         {'passID': passID, 'passtype': passtype, 'validity': validity});
 

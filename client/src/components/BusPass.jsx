@@ -35,6 +35,7 @@ export default function BusPass({setBusPassBox}) {
     const axiosPostData = async() => {
 
         const postData = {
+            'exist': busPassExist,
             'passID': passID,
             'passtype': passType,
             'validity': validity
@@ -58,6 +59,12 @@ export default function BusPass({setBusPassBox}) {
         setError('')
         axiosPostData()
     }
+    function handleDelete(e){
+        e.preventDefault()
+        axiosPostData()
+        setBusPassBox(false)
+        setBusPassBox(true)
+    }
 
 
     return(
@@ -71,6 +78,7 @@ export default function BusPass({setBusPassBox}) {
                     <p>Pass ID: {passID}</p>
                     <p>Pass Type: {passType}</p>
                     <p>Validity: {validity}</p>
+                    <button onClick={handleDelete}>Delete Pass</button>
                 </div> : 
                 <div>
                     <h2>Add Bus Pass:</h2>
