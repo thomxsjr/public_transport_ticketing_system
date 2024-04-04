@@ -11,7 +11,6 @@ export default function Dashboard() {
     const [busPassBox, setBusPassBox] = useState(false)
     const [busPassExist, setBusPassExist] = useState()
     const [validity, setValidity] = useState()
-    const [busPassButtonText, setBusPassButtonText] = useState('')
 
     useEffect( () => {
         let processing = true
@@ -28,11 +27,6 @@ export default function Dashboard() {
                 setBusPassExist(res.data.buspass.exist)
                 setValidity(res.data.buspass.details.validity)
 
-                if (busPassExist) {
-                    setBusPassButtonText('View Detail')
-                } else {
-                    setBusPassButtonText('Add Bus Pass')
-                }
             }
         })
         .catch(err => console.log(err))
@@ -47,7 +41,7 @@ export default function Dashboard() {
             <div className="BusPassBox">
                 <h1 className="BusPassText">Bus Pass</h1>
                 {busPassExist ? <p className="BusPassText">valid till {validity}</p>: <p className="BusPassText">No Active Bus Pass</p>}
-                <button className="BusPassButton" onClick={()=>{setBusPassBox(true)}}>{busPassButtonText}</button>
+                <button className="BusPassButton" onClick={()=>{setBusPassBox(true)}}>{busPassExist ? 'View Details' : 'Add Bus Pass'}</button>
             </div>
         </>
         

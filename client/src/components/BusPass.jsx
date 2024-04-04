@@ -44,8 +44,7 @@ export default function BusPass({setBusPassBox}) {
         axios.post('http://localhost:4000/updatebusPass', postData)
         .then((res)=>{
             if(res.data.result){
-                // location.reload()
-                setError('success')
+                location.reload()
             } else {
                 setError(res.data.msg)
             }
@@ -59,6 +58,7 @@ export default function BusPass({setBusPassBox}) {
         setError('')
         axiosPostData()
     }
+
 
     return(
         <>
@@ -78,13 +78,14 @@ export default function BusPass({setBusPassBox}) {
                         <label>Pass ID:</label> <br />
                         <input type="text" name="passID"required maxLength={12} value={passID} onChange={(e) => setPassID(e.target.value)} /> <br />
                         <label>Pass Type:</label> <br />
-                        <select name="passtype" required value={passType} onChange={(e) => {setPassType(e.options[e.selectedIndex].value)}}>
+                        <select name="passtype" required value={passType} onChange={(e) => setPassType(e.target.value)}>
+                            <option value="" disabled selected>Select your option</option>
                             <option value="Basic">Basic</option>
                             <option value="Standard">Standard</option>
                             <option value="Premium">Premium</option>
                         </select> <br /> 
                         <label>Validity Till:</label> <br />
-                        <input type="date" required value={validity} onChange={(e) => setValidity(e.target.value)} /> <br />
+                        <input type="date" required onChange={(e) => setValidity(e.target.value)} /> <br />
                         <button type="submit">Submit</button>
                     </form>
                 </div>} <br />
