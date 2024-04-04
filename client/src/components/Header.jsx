@@ -2,7 +2,6 @@ import '../assets/stylesheets/Header.css'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import AddBalance from './AddBalance'
-import Dashboard from '../pages/Dasboard'
 
 
 export default function Header(){
@@ -22,7 +21,7 @@ export default function Header(){
     },[])
 
     const axiosFetchData = async(processing) => {
-        await axios.get('https://public-transport-ticketing-system.onrender.com/getUser')
+        await axios.get('http://localhost:4000/getUser')
         .then(res => {
             if (processing) {
                 setUsername(res.data.username)

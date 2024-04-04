@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from 'axios'
 import { Navigate } from 'react-router-dom'
 
@@ -16,7 +16,7 @@ export default function SignUp(){
             password: password
         }
 
-        axios.post('https://public-transport-ticketing-system.onrender.com/signin', postData)
+        axios.post('http://localhost:4000/signin', postData)
         .then((res) => {
             if(res.status == 200 && res.data?.res) {
                 if(res.data.auth) 

@@ -20,7 +20,7 @@ export default function BusPass({setBusPassBox}) {
     },[])
 
     const axiosFetchData = async(processing) => {
-        await axios.get('https://public-transport-ticketing-system.onrender.com/getUser')
+        await axios.get('http://localhost:4000/getUser')
         .then(res => {
             if (processing) {
                 setBusPassExist(res.data.buspass.exist)
@@ -42,7 +42,7 @@ export default function BusPass({setBusPassBox}) {
         }
         console.log(postData)
 
-        axios.post('https://public-transport-ticketing-system.onrender.com/updatebusPass', postData)
+        axios.post('http://localhost:4000/updatebusPass', postData)
         .then((res)=>{
             if(res.data.result){
                 location.reload()

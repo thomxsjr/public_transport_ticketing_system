@@ -16,7 +16,7 @@ export default function AddBalance({setBalanceBox, balance}) {
         }
         console.log(postData)
 
-        axios.post('https://public-transport-ticketing-system.onrender.com/updateBalance', postData)
+        axios.post('http://localhost:4000/updateBalance', postData)
         .then(location.reload())
 
     }
@@ -31,7 +31,6 @@ export default function AddBalance({setBalanceBox, balance}) {
 
     return(
         <>
-        { redirect && <Navigate to='/dashboard'/>}
         <div className="balanceBoxOverlay">
         <div className="balanceBoxStyle">
             <h1>Wallet</h1>

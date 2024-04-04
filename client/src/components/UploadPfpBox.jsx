@@ -1,4 +1,4 @@
-import { useState, FormEvent } from "react";
+import { useState } from "react";
 import "../assets/stylesheets/UploadPfpBox.css"
 import axios from 'axios';
 
@@ -18,7 +18,7 @@ export default function UploadPfpBox({setPfpBox}){
         }
         console.log(postData)
 
-        axios.post('https://public-transport-ticketing-system.onrender.com/uploadnewpfp', postData)
+        axios.post('http://localhost:4000/uploadnewpfp', postData)
         .then((res) => {
             if(res.status == 200 && res.data?.res) {
                 if(res.data.auth) setError('<p>Upload Successfull</p>');
