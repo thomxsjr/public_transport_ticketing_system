@@ -10,6 +10,7 @@ import SignIn from "../pages/SignIn";
 import Home from "../pages/Home";
 import Dashboard from "../pages/Dasboard";
 import Profile from "../pages/Profile";
+import DriverOnboard from "../pages/DriverOnboard";
 
 
 export default function RouterRoutes() {
@@ -40,6 +41,10 @@ export default function RouterRoutes() {
 					<Route
 						path="/profile"
 						element={<Profile />}
+					/>
+					<Route
+						path="/driveronboard"
+						element={<DriverOnboard />}
 					/>
 
 					<Route

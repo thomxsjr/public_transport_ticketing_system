@@ -62,6 +62,7 @@ router.post('/signup',async (req,res)=>{
         const password = req.body.password
         const userData = {
             username: req.body.username,
+            isDriver: req.body.isDriver,
             pfp: 'https://firebasestorage.googleapis.com/v0/b/public-transport-ticketing-sys.appspot.com/o/images%2Fpfp%2Fdefault%2Fdefault_pfp.png?alt=media&token=1446ebd2-b1c4-4001-be71-e3eee9790ab3'
         }
 
