@@ -22,7 +22,7 @@ export default function Header(){
     },[])
 
     const axiosFetchData = async(processing) => {
-        await axios.get('http://localhost:4000/getUser')
+        await axios.get('https://public-transport-ticketing-system.onrender.com/getUser')
         .then(res => {
             if (processing) {
                 setUsername(res.data.username)
