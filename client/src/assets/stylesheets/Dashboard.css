@@ -35,3 +35,19 @@
     border-radius: 10px;
     cursor: pointer;
 }
+
+.qr-scanner{
+    position: fixed;
+    background-color: white;
+    color: black;
+    padding: 0px 10px;
+    margin: auto;
+    bottom: 10px;
+    left: 50%;
+    width: 150px;
+    border-radius: 30px;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    box-shadow: rgb(68, 68, 68) 0px 0px 20px;
+    cursor: pointer;
+}

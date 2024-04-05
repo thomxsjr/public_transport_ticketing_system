@@ -4,11 +4,14 @@ import "../assets/stylesheets/Dashboard.css"
 import Header from '../components/Header'
 import Destination from '../components/Destination'
 import BusPass from "../components/BusPass";
+import { Navigate } from "react-router-dom";
+
 
 
 export default function Dashboard() {
 
     const [busPassBox, setBusPassBox] = useState(false)
+    const [QRPage, setQRPage] = useState(false)
     const [busPassExist, setBusPassExist] = useState()
     const [validity, setValidity] = useState()
     const [driver, setDriver] = useState()
@@ -53,6 +56,7 @@ export default function Dashboard() {
     return(
         <>
             { busPassBox ? <BusPass setBusPassBox={setBusPassBox} /> : null}
+            { QRPage && <Navigate to={'/qrpage'} />}
             <Header />
             < Destination />
             {driver ? 
@@ -75,6 +79,9 @@ export default function Dashboard() {
                 <h1 className="BusPassText">Bus Pass</h1>
                 {busPassExist ? <p className="BusPassText">valid till {validity}</p>: <p className="BusPassText">No Active Bus Pass</p>}
                 <button className="BusPassButton" onClick={()=>{setBusPassBox(true)}}>{busPassExist ? 'View Details' : 'Add Bus Pass'}</button>
+            </div>
+            <div onClick={()=>setQRPage(true)} className="qr-scanner">
+                <h2>Scan</h2>
             </div>
         </>
         

@@ -11,6 +11,7 @@ import Home from "../pages/Home";
 import Dashboard from "../pages/Dasboard";
 import Profile from "../pages/Profile";
 import DriverOnboard from "../pages/DriverOnboard";
+import QRPage from "../pages/QRPage";
 
 
 export default function RouterRoutes() {
@@ -46,6 +47,11 @@ export default function RouterRoutes() {
 						path="/driveronboard"
 						element={<DriverOnboard />}
 					/>
+					<Route
+						path="/qrpage"
+						element={<QRPage />}
+					/>
+
 
 					<Route
 						path="*"
