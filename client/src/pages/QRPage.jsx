@@ -3,14 +3,15 @@ import { useEffect, useState } from 'react';
 
 export default function QRPage(){
 
-    const [scanResult, setScanResult] = useState(null)
+    const [scanResult, setScanResult] = useState(false)
+    const [confirmPageRedirect, setConfirmPageRedirect] = useState(false)
 
     useEffect(()=>{
 
         const scanner = new Html5QrcodeScanner('reader', {
             qrbox: {
-                width: 250,
-                height: 250
+                width: 450,
+                height: 450
             },
             fps: 5
         })
@@ -29,10 +30,15 @@ export default function QRPage(){
 
     return(
         <>
+
             <div>
                 <h1>QR Code Scanner</h1>
                 {scanResult
-                ?<div>Success: <a href={"https://"+scanResult}>{scanResult}</a></div>
+                ?
+                <div>
+                    {/* Success: <a target='blank' href={scanResult}>{scanResult}</a> */}
+                    { confirmPageRedirect && <Navigate to={'/rideconfirmation'} />}
+                </div>
                 :<div id='reader'></div>
                 }
                 

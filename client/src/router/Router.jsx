@@ -12,6 +12,7 @@ import Dashboard from "../pages/Dasboard";
 import Profile from "../pages/Profile";
 import DriverOnboard from "../pages/DriverOnboard";
 import QRPage from "../pages/QRPage";
+import RideConfirmation from "../pages/RideConfirmation";
 
 
 export default function RouterRoutes() {
@@ -51,8 +52,10 @@ export default function RouterRoutes() {
 						path="/qrpage"
 						element={<QRPage />}
 					/>
-
-
+					<Route
+						path="/rideconfirmation"
+						element={<RideConfirmation />}
+					/>
 					<Route
 						path="*"
 						element={<Navigate to="/" />}
