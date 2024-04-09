@@ -29,7 +29,7 @@ export default function QRPage(){
     },[]);
 
     return(
-        <>
+    
             <div>
                 <h1>QR Code Scanner</h1>
                 {scanResult
@@ -41,6 +41,6 @@ export default function QRPage(){
                 }
                 
             </div>
-        </>
+        
     )
 }

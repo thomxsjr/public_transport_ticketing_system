@@ -6,7 +6,7 @@ export default function RideConfirmation({link}){
 
     return(
         <>
-            
+            <p>{link}</p>
         </>
     )
 }

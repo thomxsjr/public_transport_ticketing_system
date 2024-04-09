@@ -23,12 +23,15 @@ export default function Dashboard() {
     const [rate, setRate] = useState()
     const [uid, setuid] = useState()
 
-    const [url, setUrl] = useState(`http://localhost:4000/rideinit/${uid}`)
+    const [url, setUrl] = useState()
     const [qrcode, setQrcode] = useState()
 
 
     const GenerateQRCode = ()=>{
-        QRCode.toDataURL(url, (err, url)=>{
+        QRCode.toDataURL(url,{
+            width: 800,
+            margin: 2
+        }, (err, url)=>{
             if (err) return console.error(err)
 
             console.log(url)
@@ -93,7 +96,11 @@ export default function Dashboard() {
             </div> 
             <div className="qrcodegen">
                 <h1>QR Code Generator</h1>
-                <button onClick={GenerateQRCode}>Generate QR Code</button>
+                <button onClick={()=>
+                {setUrl(`http://localhost:4000/rideinit/${uid}`)
+                console.log(url)
+                GenerateQRCode()}
+                }>Generate QR Code</button>
                 {qrcode && 
                 <>
                     <img src={qrcode} />
