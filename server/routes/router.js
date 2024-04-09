@@ -15,7 +15,7 @@ router.get('/getUser', async (req, res) => {
         const userID = auth.currentUser.uid;
         const  dbRef = ref(db, `users/${userID}`);
         const getUserDetails = await get(dbRef);
-        const userDetails = getUserDetails.val();    
+        const userDetails = getUserDetails.val(); 
         res.json(userDetails);
         } catch (e) {
             console.log("Error : ", e);

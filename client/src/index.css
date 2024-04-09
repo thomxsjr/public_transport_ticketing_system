@@ -7,6 +7,8 @@
 html {
   font-family: "Quicksand", sans-serif;
   line-height: 1.5;
+  padding: 0;
+  margin: 0;
 
   color: #ebe7ef;
   background: linear-gradient(#99A7C8, #CBACA3);

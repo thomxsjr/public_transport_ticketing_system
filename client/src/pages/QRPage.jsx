@@ -1,10 +1,10 @@
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import { useEffect, useState } from 'react';
+import RideConfirmation from './RideConfirmation';
 
 export default function QRPage(){
 
     const [scanResult, setScanResult] = useState(false)
-    const [confirmPageRedirect, setConfirmPageRedirect] = useState(false)
 
     useEffect(()=>{
 
@@ -13,14 +13,14 @@ export default function QRPage(){
                 width: 450,
                 height: 450
             },
-            fps: 5
+            fps: 20,
         })
 
         scanner.render(success, error);
 
         function success(result) {
-            scanner.clear();
             setScanResult(result)
+            scanner.clear();
         }
 
         function error(err) {
@@ -30,14 +30,12 @@ export default function QRPage(){
 
     return(
         <>
-
             <div>
                 <h1>QR Code Scanner</h1>
                 {scanResult
                 ?
                 <div>
-                    {/* Success: <a target='blank' href={scanResult}>{scanResult}</a> */}
-                    { confirmPageRedirect && <Navigate to={'/rideconfirmation'} />}
+                    <RideConfirmation link = {scanResult} />
                 </div>
                 :<div id='reader'></div>
                 }
