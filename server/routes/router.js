@@ -2,6 +2,7 @@ const { loginQuery, signUpQuery, uploadPfp } = require("../utils");
 const { auth, db } = require('../connections/firebase');
 const { ref, get, set } = require('firebase/database');
 const { signOut } =require('firebase/auth')
+const { v4: uuidv4 } = require('uuid');
 
 
 
@@ -9,7 +10,6 @@ const express = require('express')
 const router = express.Router()
 
 router.get('/getUser', async (req, res) => {
-
 
     try {
         const userID = auth.currentUser.uid;
@@ -66,7 +66,6 @@ router.post('/driveronboard', async (req, res) => {
     const numberplate = req.body.numberplate
     const rate = req.body.rate
 
-
     try {
         set(ref(db, 'users/'+userID+'/driverdetails'), 
         {'licensenumber': licensenumber, 'name': name, 'rate': rate, 'vehicledetails':{'numberplate': numberplate, 'vehiclemodel': vehiclemodel, 'vehicletype': vehicletype}})
@@ -77,6 +76,67 @@ router.post('/driveronboard', async (req, res) => {
         console.error(err)
         return res.status(501).json({result:false, msg:"Something went wrong!"});
     }
+})
+
+router.get('/getDriver/:driverUid', async (req, res) => {
+    try {
+        const driverUserID = req.params.driverUid;
+        const  dbRef = ref(db, `users/${driverUserID}`);
+        const getDriverDetails = await get(dbRef);
+        const driverDetails = getDriverDetails.val(); 
+        res.json(driverDetails);
+    } catch (e) {
+        console.log("Error : ", e);
+        return null
+    }
+})
+
+router.post('/rideinit', async(req, res) => {
+    const drivername = req.body.drivername
+    const driveruid = req.body.driverUid
+    const rate = req.body.rate
+    const paymentMethod = req.body.paymentMethod
+    const vehicletype = req.body.vehicletype
+    const lat = req.body.lat
+    const long = req.body.long
+    const userID = auth.currentUser.uid
+    const rideId = uuidv4();
+
+
+    const d = new Date();
+    const dd = String(d.getDate()).padStart(2, '0');
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const yyyy = d.getFullYear();
+    const hour = String(d.getHours())
+    const min = String(d.getMinutes())
+    const sec = String(d.getSeconds())
+
+
+    date = mm + '/' + dd + '/' + yyyy;
+    time = hour+":"+min+":"+sec
+
+
+    try{
+        const  dbRef = ref(db, `users/${userID}/rideActive`);
+        const getRideActive = await get(dbRef);
+        const rideActive = getRideActive.val(); 
+        
+        if(rideActive){
+
+        } else {
+            set(ref(db, 'users/'+userID+'/rideActive'), !rideActive)
+            set(ref(db, 'users/'+userID+'/rideDetails'), {'lat1':lat, 'long1':long, 'rideId': rideId})
+            set(ref(db, 'users/'+userID+'/rideHistory/'+rideId), {'date':date, 'time': time, 'vehicletype': vehicletype, 'paymentMethod': paymentMethod, 'status': 'ongoing'})
+            set(ref(db, 'users/'+driveruid+'/driverRideHistory/'+rideId), {'date':date, 'time': time, 'paymentMethod': paymentMethod, 'status': 'ongoing'})
+
+        }
+
+
+
+    } catch (e){
+        console.log("Error : ", e);
+    }
+
 })
 
 router.post('/signup',async (req,res)=>{

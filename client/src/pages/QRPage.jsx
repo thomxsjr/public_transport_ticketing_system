@@ -5,6 +5,7 @@ import RideConfirmation from './RideConfirmation';
 export default function QRPage(){
 
     const [scanResult, setScanResult] = useState(false)
+    const [rideConfirmBox, setRideConfirmBox] = useState(false)
 
     useEffect(()=>{
 
@@ -20,19 +21,21 @@ export default function QRPage(){
 
         function success(result) {
             setScanResult(result)
+            setRideConfirmBox(true)
             scanner.clear();
+            
         }
 
         function error(err) {
             console.warn(err)
         }
     },[]);
-
+    
     return(
     
             <div>
                 <h1>QR Code Scanner</h1>
-                {scanResult
+                {rideConfirmBox
                 ?
                 <div>
                     <RideConfirmation link = {scanResult} />
