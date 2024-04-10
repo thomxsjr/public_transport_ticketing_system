@@ -1,4 +1,4 @@
-const { loginQuery, signUpQuery, uploadPfp } = require("../utils");
+const { loginQuery, signUpQuery, uploadPfp, getDistanceFromLatLonInKm } = require("../utils");
 const { auth, db } = require('../connections/firebase');
 const { ref, get, set } = require('firebase/database');
 const { signOut } =require('firebase/auth')
@@ -122,19 +122,58 @@ router.post('/rideinit', async(req, res) => {
         const rideActive = getRideActive.val(); 
         
         if(rideActive){
+            set(ref(db, 'users/'+userID+'/rideActive'), !rideActive)
+            set(ref(db, 'users/'+userID+'/rideDetails/lat2'),lat)
+            set(ref(db, 'users/'+userID+'/rideDetails/long2'),long)
+            set(ref(db, 'users/'+driveruid+'/driverRideDetails/lat2'),lat)
+            set(ref(db, 'users/'+driveruid+'/driverRideDetails/long2'),long)
+
+            const  dbRef1 = ref(db, `users/${userID}/rideDetails/rideId`);
+            const getRideId = await get(dbRef1);
+            const rideId = getRideId.val(); 
+            const  dbRef2 = ref(db, `users/${userID}/rideDetails/lat1`);
+            const getlat1 = await get(dbRef2);
+            const lat1 = getlat1.val();
+            const  dbRef3 = ref(db, `users/${userID}/rideDetails/long1`);
+            const getlong1 = await get(dbRef3);
+            const long1 = getlong1.val();
+            const  dbRef4 = ref(db, `users/${userID}/balance`);
+            const getUserBalance = await get(dbRef4);
+            const userBalance = getUserBalance.val();
+            const  dbRef5 = ref(db, `users/${driveruid}/balance`);
+            const getDriverBalance = await get(dbRef5);
+            const driverBalance = getDriverBalance.val();
+
+            const distance = getDistanceFromLatLonInKm(lat1, long1, lat, long)
+            const rideCost = distance * rate;
+
+            const newUserBalance = userBalance - rideCost
+            const newDriverBalance = driverBalance + rideCost
+            
+            set(ref(db, 'users/'+userID+'/rideHistory/'+rideId+'/status'), 'completed')
+            set(ref(db, 'users/'+driveruid+'/driverRideHistory/'+rideId+'/status'), 'completed')
+            
+            set(ref(db, 'users/'+userID+'/rideHistory/'+rideId+'/rideCost'), rideCost)
+            set(ref(db, 'users/'+driveruid+'/driverRideHistory/'+rideId+'/rideCost'), rideCost)
+
+            set(ref(db, `users/${userID}/balance`), newUserBalance)
+            set(ref(db, `users/${driveruid}/balance`), newDriverBalance)
+            res.status(200).json({result:true, msg: 'Success'}) 
 
         } else {
             set(ref(db, 'users/'+userID+'/rideActive'), !rideActive)
             set(ref(db, 'users/'+userID+'/rideDetails'), {'lat1':lat, 'long1':long, 'rideId': rideId})
+            set(ref(db, 'users/'+driveruid+'/driverRideDetails'), {'lat1':lat, 'long1':long, 'rideId': rideId})
             set(ref(db, 'users/'+userID+'/rideHistory/'+rideId), {'date':date, 'time': time, 'vehicletype': vehicletype, 'paymentMethod': paymentMethod, 'status': 'ongoing'})
             set(ref(db, 'users/'+driveruid+'/driverRideHistory/'+rideId), {'date':date, 'time': time, 'paymentMethod': paymentMethod, 'status': 'ongoing'})
-
+            res.status(200).json({result:true, msg: 'Success'}) 
         }
 
 
 
     } catch (e){
         console.log("Error : ", e);
+        res.status(400).json({result:false, msg: 'Failed'}) 
     }
 
 })

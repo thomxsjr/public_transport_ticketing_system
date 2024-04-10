@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 export default function RideConfirmation({link}){
 
@@ -11,6 +12,7 @@ export default function RideConfirmation({link}){
     const [paymentMethod, setPaymentMethod] = useState()
     const [lat, setLat] = useState()
     const [long, setLong] = useState()
+    const [redirect, setRedirect] = useState(false)
 
 
     useEffect( () => {
@@ -50,7 +52,7 @@ export default function RideConfirmation({link}){
         axios.post('http://localhost:4000/rideinit', postData)
         .then((res) => {
             if(res.data.result) {
-                
+                setRedirect(true)
             
             }
     
@@ -79,6 +81,7 @@ export default function RideConfirmation({link}){
 
     return(
         <>
+            { redirect && <Navigate to={'/dashboard'} />}
             <h1>Confirm Ride</h1>
             <h3>Details</h3>
             <h4>Driver Name:</h4>
@@ -97,8 +100,8 @@ export default function RideConfirmation({link}){
 
             <form onSubmit={handleSubmit}> 
                 <label>Payment Method</label><br />
-                <select name="paymentMethod" value={paymentMethod} onChange={(e)=>{setPaymentMethod(e.target.value)}}>
-                    <option value="" selected  disabled>Select an Option</option>
+                <select required name="paymentMethod" value={paymentMethod} onChange={(e)=>{setPaymentMethod(e.target.value)}}>
+                    <option selected value="" disabled>Select an Option</option>
                     <option value="Wallet">Wallet</option>
                     {vehicalType=='Bus'?<option value="Bus Pass">Bus Pass</option>: <option disabled value="Bus Pass">Bus Pass</option>}
                 </select><br />
