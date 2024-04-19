@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from 'axios'
 import { Navigate } from 'react-router-dom'
+import "../assets/stylesheets/SignIn.css"
 
 
 export default function SignUp(){
@@ -41,20 +42,20 @@ export default function SignUp(){
     }
 
     return(
-        <>
+        <div className="SigninContainer">
             <h1>Sign In</h1>
             { redirect && <Navigate to='/dashboard'/>}
             <form onSubmit={handleSubmit}>
-                <label>Email</label>
+                <label>Email</label><br />
                 <input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <br />
-                <label>Password</label>
+                <label>Password</label><br />
                 <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 <br />
-                {error}
+                {error} <br />
                 <button type="submit">Submit</button>
             </form>
-        </>
+        </div>
     )
 
 }

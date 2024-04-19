@@ -13,6 +13,7 @@ export default function RideConfirmation({link}){
     const [lat, setLat] = useState()
     const [long, setLong] = useState()
     const [redirect, setRedirect] = useState(false)
+    const [rideActive, setRideActive] = useState()
 
 
     useEffect( () => {
@@ -32,6 +33,15 @@ export default function RideConfirmation({link}){
                 setdriverRate(res.data.driverdetails.rate)
                 setvehicalType(res.data.driverdetails.vehicledetails.vehicletype)
                 setNumberPlate(res.data.driverdetails.vehicledetails.numberplate)
+                
+
+            }
+        })
+        .catch(err => console.log(err))
+        await axios.get(`http://localhost:4000/getUser`)
+        .then(res => {
+            if (processing) {
+                setRideActive(res.data.rideActive)
                 
 
             }
@@ -99,12 +109,18 @@ export default function RideConfirmation({link}){
             <p>{long}</p>
 
             <form onSubmit={handleSubmit}> 
+                
+                {rideActive ? 
+                <>
                 <label>Payment Method</label><br />
                 <select required name="paymentMethod" value={paymentMethod} onChange={(e)=>{setPaymentMethod(e.target.value)}}>
                     <option selected value="" disabled>Select an Option</option>
                     <option value="Wallet">Wallet</option>
                     {vehicalType=='Bus'?<option value="Bus Pass">Bus Pass</option>: <option disabled value="Bus Pass">Bus Pass</option>}
                 </select><br />
+                </>
+                : <></>}
+                
                 <button type="submit">Confirm</button>
             </form>
         </>
