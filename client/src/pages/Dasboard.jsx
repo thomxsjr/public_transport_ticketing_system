@@ -9,7 +9,7 @@ import QRCode from 'qrcode'
 
 
 export default function Dashboard() {
-    var DriverRideHistoryList;
+
     const [busPassBox, setBusPassBox] = useState(false)
     const [QRPage, setQRPage] = useState(false)
     const [busPassExist, setBusPassExist] = useState()
@@ -57,6 +57,8 @@ export default function Dashboard() {
                 setBusPassExist(res.data.buspass.exist)
                 setValidity(res.data.buspass.details.validity)
                 setDriver(res.data.isDriver)
+                setRideHistory(res.data.rideHistory)
+
                 // if(driver){
                     setName(res.data.driverdetails.name)
                     setLicenseNumber(res.data.driverdetails.licensenumber)
@@ -84,6 +86,26 @@ export default function Dashboard() {
             { QRPage && <Navigate to={'/qrpage'} />}
             <Header />
             < Destination />
+            
+                
+            {rideHistory==null ? null : 
+                <div className="HistoryBox">
+                    <h1>Ride History</h1>
+                    { Object.keys(rideHistory).map(key => 
+                    <>
+                        
+                        <h3>{rideHistory[key].date}</h3>
+                        <p>Cost: {rideHistory[key].rideCost}</p>
+                        <p>Payment Method: {rideHistory[key].paymentMethod}</p>
+                        <p>Time: {rideHistory[key].time}</p>
+                        <p>Status: {rideHistory[key].status}</p>
+                        <p>Vehicle: {rideHistory[key].vehicletype}</p>
+
+                    </>
+                ) }  
+                </div>
+            }
+                 
             {driver ? 
             <div>
             <div className="DriverDetails">
@@ -116,8 +138,16 @@ export default function Dashboard() {
                 }
             </div>
             <div className="HistoryBox">
-
-                { Object.keys(driverRideHistory).map(key => <p>{key}</p>) }          
+                <h1>Driver Ride History</h1>
+                { Object.keys(driverRideHistory).map(key => 
+                <>
+                    <h3>{driverRideHistory[key].date}</h3>
+                    <p>Cost: {driverRideHistory[key].rideCost}</p>
+                    <p>Payment Method: {driverRideHistory[key].paymentMethod}</p>
+                    <p>Time: {driverRideHistory[key].time}</p>
+                    <p>Status: {driverRideHistory[key].status}</p>
+                </>
+                ) }          
             
             </div>
             </div>
