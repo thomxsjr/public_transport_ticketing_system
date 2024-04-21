@@ -9,7 +9,7 @@ import QRCode from 'qrcode'
 
 
 export default function Dashboard() {
-
+    var DriverRideHistoryList;
     const [busPassBox, setBusPassBox] = useState(false)
     const [QRPage, setQRPage] = useState(false)
     const [busPassExist, setBusPassExist] = useState()
@@ -21,6 +21,8 @@ export default function Dashboard() {
     const [vehicleType, setVehicleType] = useState()
     const [numberPlate, setNumberPlate] = useState()
     const [rate, setRate] = useState()
+    const [driverRideHistory, setDriverRideHistory] = useState()
+    const [rideHistory, setRideHistory] = useState()
     const [uid, setuid] = useState()
 
     const [url, setUrl] = useState()
@@ -62,6 +64,11 @@ export default function Dashboard() {
                     setNumberPlate(res.data.driverdetails.vehicledetails.numberplate)
                     setVehicleModel(res.data.driverdetails.vehicledetails.vehiclemodel)
                     setVehicleType(res.data.driverdetails.vehicledetails.vehicletype)
+                    setDriverRideHistory(res.data.driverRideHistory)
+                    console.log(driverRideHistory)
+                    // DriverRideHistoryList = Object.keys(driverRideHistory).map(key => {
+                    //     return <p>{key.date}</p>
+                    // });
     
                 // }
 
@@ -107,6 +114,11 @@ export default function Dashboard() {
                     <a href={qrcode} download="qrcode.png"><button>Download</button></a>
                 </>
                 }
+            </div>
+            <div className="HistoryBox">
+
+                { Object.keys(driverRideHistory).map(key => <p>{key}</p>) }          
+            
             </div>
             </div>
             : null}

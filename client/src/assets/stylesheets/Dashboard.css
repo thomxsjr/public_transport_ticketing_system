@@ -7,6 +7,15 @@
     display:flex;
     flex-direction: column;
 }
+.HistoryBox{
+    background-color: white;
+    color: black;
+    margin-top: 20px;
+    border-radius: 20px;
+    padding: 10px;
+    display:flex;
+    flex-direction: column;
+}
 .DriverDetails{
     background-color: white;
     color: black;
