@@ -21,17 +21,17 @@ export default function RouterRoutes() {
 			<Router>
 				<Routes>
 					<Route
-						exact
-						path="https://public-transport-ticketing-system-7ypg.onrender.com/"
+						
+						path="/"
 						element={<Home />}
 					/>
 					<Route
-						path="https://public-transport-ticketing-system-7ypg.onrender.com/signup"
+						path="/signup"
 						element={<SignUp />}
 					/>
 
 					<Route
-						path="https://public-transport-ticketing-system-7ypg.onrender.com/signin"
+						path="/signin"
 						element={<SignIn />}
 					/>
 
