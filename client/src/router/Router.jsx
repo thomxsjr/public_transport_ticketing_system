@@ -22,16 +22,16 @@ export default function RouterRoutes() {
 				<Routes>
 					<Route
 						exact
-						path="/"
+						path="https://public-transport-ticketing-system-7ypg.onrender.com/"
 						element={<Home />}
 					/>
 					<Route
-						path="/signup"
+						path="https://public-transport-ticketing-system-7ypg.onrender.com/signup"
 						element={<SignUp />}
 					/>
 
 					<Route
-						path="/signin"
+						path="https://public-transport-ticketing-system-7ypg.onrender.com/signin"
 						element={<SignIn />}
 					/>
 
