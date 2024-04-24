@@ -110,16 +110,14 @@ export default function RideConfirmation({link}){
 
             <form onSubmit={handleSubmit}> 
                 
-                {rideActive ? 
-                <>
+               
                 <label>Payment Method</label><br />
                 <select required name="paymentMethod" value={paymentMethod} onChange={(e)=>{setPaymentMethod(e.target.value)}}>
                     <option selected value="" disabled>Select an Option</option>
                     <option value="Wallet">Wallet</option>
                     {vehicalType=='Bus'?<option value="Bus Pass">Bus Pass</option>: <option disabled value="Bus Pass">Bus Pass</option>}
                 </select><br />
-                </>
-                : <></>}
+                
                 
                 <button type="submit">Confirm</button>
             </form>
