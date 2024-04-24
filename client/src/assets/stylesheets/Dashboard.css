@@ -1,6 +1,10 @@
 p{
     margin: auto;
 }
+input {
+    border: 1px black solid;
+    width: 90%;
+}
 .BusPassBox{
     background-color: white;
     color: black;

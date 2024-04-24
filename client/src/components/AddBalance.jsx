@@ -37,8 +37,8 @@ export default function AddBalance({setBalanceBox, balance}) {
             <p>current balance: {balance}</p>
             <h2>Add Balance: {newBalance}</h2>
             <form onSubmit={handleSubmit}>
-                <input type="number" onChange={(e)=>{setNewBalance(e.target.value)}} placeholder={1000}/>
-                <button type="submit">Submit</button>
+                <input type="number" onChange={(e)=>{setNewBalance(e.target.value)}} placeholder={1000}/> <br /><br />
+                <button type="submit">Submit</button> <br /><br />
             </form>
             <p>{error}</p>
             <button onClick={()=>{setBalanceBox(false)}}>Close</button>

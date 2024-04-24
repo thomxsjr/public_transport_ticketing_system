@@ -161,6 +161,7 @@ export default function Dashboard() {
             <div onClick={()=>setQRPage(true)} className="qr-scanner">
                 <h2>Scan</h2>
             </div>
+            <br /><br /><br /><br /><br /><br />
         </>
         
     )
