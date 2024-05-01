@@ -50,7 +50,7 @@ export default function Dashboard() {
     },[])
 
     const axiosFetchData = async(processing) => {
-        await axios.get('http://localhost:4000/getUser')
+        await axios.get('https://public-transport-ticketing-system.onrender.com/getUser')
         .then(res => {
             if (processing) {
                 setuid(res.data.uid)
@@ -126,7 +126,7 @@ export default function Dashboard() {
             <div className="qrcodegen">
                 <h1>QR Code Generator</h1>
                 <button onClick={()=>
-                {setUrl(`http://localhost:4000/rideinit/${uid}`)
+                {setUrl(`https://public-transport-ticketing-system.onrender.com/rideinit/${uid}`)
                 console.log(url)
                 GenerateQRCode()}
                 }>Generate QR Code</button>

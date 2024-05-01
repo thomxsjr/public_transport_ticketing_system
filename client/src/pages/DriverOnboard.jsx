@@ -24,7 +24,7 @@ export default function DriverOnboard(){
             vehicletype: vehicleType
         }
 
-        axios.post('http://localhost:4000/driveronboard', postData)
+        axios.post('https://public-transport-ticketing-system.onrender.com/driveronboard', postData)
         .then((res) => {
             if(res.data.result){
                 setRedirect(true)
