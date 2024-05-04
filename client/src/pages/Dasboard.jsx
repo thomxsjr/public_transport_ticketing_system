@@ -50,7 +50,7 @@ export default function Dashboard() {
     },[])
 
     const axiosFetchData = async(processing) => {
-        await axios.get('https://public-transport-ticketing-system.onrender.com/getUser')
+        await axios.get('http://localhost:4000/getUser')
         .then(res => {
             if (processing) {
                 setuid(res.data.uid)

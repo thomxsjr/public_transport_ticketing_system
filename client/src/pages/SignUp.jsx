@@ -22,7 +22,7 @@ export default function SignUp(){
             password: password
         }
 
-        axios.post('https://public-transport-ticketing-system.onrender.com/signup', postData)
+        axios.post('http://localhost:4000/signup', postData)
         .then((res) => {
             if(res.status == 200 && res.data?.res) {
                 if(res.data.auth)

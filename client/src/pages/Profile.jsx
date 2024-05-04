@@ -24,7 +24,7 @@ export default function Profile() {
     },[])
 
     const axiosFetchData = async(processing) => {
-        await axios.get('https://public-transport-ticketing-system.onrender.com/getUser')
+        await axios.get('http://localhost:4000/getUser')
         .then(res => {
             if (processing) {
                 setUsername(res.data.username)
@@ -36,7 +36,7 @@ export default function Profile() {
     }
     const axiosPostData = async() => {
 
-        axios.post('https://public-transport-ticketing-system.onrender.com/logout')
+        axios.post('http://localhost:4000/logout')
         .then((res)=>{
             if(res.data.result){
                 setRedirect(true)

@@ -42,7 +42,7 @@ export default function BusPass({setBusPassBox}) {
         }
         console.log(postData)
 
-        axios.post('https://public-transport-ticketing-system.onrender.com/updatebusPass', postData)
+        axios.post('http://localhost:4000/updatebusPass', postData)
         .then((res)=>{
             if(res.data.result){
                 location.reload()

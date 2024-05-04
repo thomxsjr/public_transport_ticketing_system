@@ -26,7 +26,7 @@ export default function RideConfirmation({link}){
     },[])
 
     const axiosFetchData = async(processing) => {
-        await axios.get(`https://public-transport-ticketing-system.onrender.com/getDriver/${driverUid}`)
+        await axios.get(`http://localhost:4000/getDriver/${driverUid}`)
         .then(res => {
             if (processing) {
                 setdriverName(res.data.driverdetails.name)
@@ -38,7 +38,7 @@ export default function RideConfirmation({link}){
             }
         })
         .catch(err => console.log(err))
-        await axios.get(`https://public-transport-ticketing-system.onrender.com/getUser`)
+        await axios.get(`http://localhost:4000/getUser`)
         .then(res => {
             if (processing) {
                 setRideActive(res.data.rideActive)
@@ -59,7 +59,7 @@ export default function RideConfirmation({link}){
             long: long
         }
 
-        axios.post('https://public-transport-ticketing-system.onrender.com/rideinit', postData)
+        axios.post('http://localhost:4000/rideinit', postData)
         .then((res) => {
             if(res.data.result) {
                 setRedirect(true)
